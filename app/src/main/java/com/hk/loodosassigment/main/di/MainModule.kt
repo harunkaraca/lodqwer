@@ -1,6 +1,7 @@
 package com.hk.loodosassigment.main.di
 
 import androidx.lifecycle.ViewModel
+import com.hk.loodosassigment.data.BaseRepository
 import com.hk.loodosassigment.data.service.Api
 import com.hk.loodosassigment.di.ViewModelKey
 import com.hk.loodosassigment.main.MainViewModel
@@ -19,5 +20,6 @@ abstract class MainModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun bindViewModel(viewmodel: MainViewModel): ViewModel
+
 }
 

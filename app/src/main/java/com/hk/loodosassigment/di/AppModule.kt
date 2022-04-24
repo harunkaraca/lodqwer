@@ -7,6 +7,8 @@ import androidx.room.Room
 import com.hk.loodosassigment.BuildConfig
 import com.hk.loodosassigment.data.service.Api
 import com.hk.loodosassigment.data.source.BaseDataSource
+import com.hk.loodosassigment.data.source.local.LocalDataSource
+import com.hk.loodosassigment.data.source.local.database.MyDatabase
 import com.hk.loodosassigment.data.source.remote.RemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -21,6 +23,10 @@ import javax.inject.Singleton
 
 @Module
 object AppModule {
+
+    @Qualifier
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class LocalDataSource
 
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)
@@ -71,7 +77,26 @@ object AppModule {
     fun provideRemoteDataSource(api: Api,ioDispatcher: CoroutineDispatcher) : BaseDataSource {
         return RemoteDataSource(api,ioDispatcher)
     }
+    @JvmStatic
+    @Singleton
+    @LocalDataSource
+    @Provides
+    fun provideLocalDataSource(database: MyDatabase, ioDispatcher: CoroutineDispatcher): BaseDataSource {
+        return com.hk.loodosassigment.data.source.local.LocalDataSource(
+            database.coinDao(), ioDispatcher
+        )
+    }
 
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideDataBase(context: Context): MyDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            MyDatabase::class.java,
+            "Tasks.db"
+        ).build()
+    }
     @JvmStatic
     @Singleton
     @Provides

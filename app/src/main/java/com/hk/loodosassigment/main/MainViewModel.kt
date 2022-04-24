@@ -31,15 +31,15 @@ class MainViewModel  @Inject constructor(private val baseRepository: BaseReposit
 //       loadCountry()
    }
     fun refresh(){
-        loadCountry()
+        loadCoins()
     }
-    fun loadCountry(){
+    fun loadCoins(){
         Log.i("MainViewModel","run MainViewModel")
         viewModelScope.launch {
             val result=baseRepository.getCoinList()
             if(result is Success){
                 _isDataLoadingError.value = false
-                _items.value = result.data
+                _items.value = result.data.value
             }else{
                 _isDataLoadingError.value = false
                 _items.value = emptyList()

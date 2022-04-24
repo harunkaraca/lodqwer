@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -62,6 +64,15 @@ class MainFragment : Fragment() {
             coins?.let {
                 binding.coinRcv.visibility=View.VISIBLE
                 coinsAdapter.updateCoins(it)
+            }
+            var builder = NotificationCompat.Builder(requireContext(), "NotificationID")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.price_updated))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            with(NotificationManagerCompat.from(requireContext())) {
+                // notificationId is a unique int for each notification that you must define
+                notify(1, builder.build())
             }
         })
         viewModel.dataLoading.observe(viewLifecycleOwner, Observer {isLoading->

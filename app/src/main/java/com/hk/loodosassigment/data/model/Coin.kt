@@ -18,5 +18,9 @@ data class Coin(
     @ColumnInfo(name = "price")
     @SerializedName("price")
     @Expose
-    var price: String?
+    var price: String?,
+    @ColumnInfo(name = "image_url")
+    @SerializedName("image_url")
+    @Expose
+    var imageUrl: String?
 )

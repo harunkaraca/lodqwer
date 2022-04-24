@@ -34,6 +34,6 @@ class DefaultRepository @Inject constructor(
     }
 
     private suspend fun refreshCoinPrices(value: List<Coin>?) {
-        localDataSource.updateCoinPrices(value!!)
+        value?.let { localDataSource.updateCoinPrices(value) }
     }
 }

@@ -20,7 +20,7 @@ class RemoteDataSource internal constructor(private val api: Api,private val ioD
         try {
             api.getCoins(token).let {response->
                 if(response.isSuccessful){
-                    data.postValue(response.body()!!.data!!)
+                    data.value=response.body()!!.data!!
 //                    localDataSource.updateCoins(response.body()!!.data!!)
                     return Success(data)
                 }else return Error(Exception("Error occured"))

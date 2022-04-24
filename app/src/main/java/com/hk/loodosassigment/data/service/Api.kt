@@ -10,6 +10,6 @@ interface Api {
     @GET("/refreshToken")
     suspend fun refreshToken(@Header("x-token") xToken: String): Response<BaseApiResponse<String>>
 
-    @GET("/harunkaraca/mockdata/main/mock.json")
+    @GET("/harunkaraca/mockdata/main/mockdatacrypto.json")
     suspend fun getCoins(@Header("token") token:String):Response<BaseApiResponse<List<Coin>>>
 }
